@@ -14,10 +14,27 @@
         <ul>
           <li v-for="player in players">
             {{ player.name }} - {{ player.position }}
+            <button @click="favorite(player.name)"> &#128525; Favorite</button>
           </li>
         </ul>
-        <p><span v-for="(player, index) in players">
-          {{ player.name }}{{index === players.length - 1 ? '' : ', ' }} </span></p>
+      </div>
+
+      <div>
+        <h1>Favorites</h1>
+        <p v-if="favoriteList.length === 0">None selected yet</p>
+        <ul>
+          <li v-for="name in favoriteList">{{ name }}</li>
+        </ul>
+      </div>
+
+      <div>
+        <h1>Add a player</h1>
+        <label for="player-name">Name</label>
+        <input type="text" v-model="newPlayer.name" @keyup.enter="addPlayer" />
+        <br>
+        <label for="player-position">Position</label>
+        <input type="text" v-model="newPlayer.position" />
+        <br>
       </div>
 
     </div>
@@ -27,7 +44,12 @@
       const app = createApp({
         data() {
           return {
+            favoriteList: [],
             teamName: 'Lakers',
+            newPlayer: {
+              name: '',
+              position: '',
+            },
             players: [
               {
                 name: 'Lebron James',
@@ -50,6 +72,26 @@
                 position: 'G'
               }
             ]
+          }
+        },
+        methods: {
+          favorite(name) {
+            const idx = this.favoriteList.indexOf(name);
+            if (idx > -1) {
+              this.favoriteList.splice(idx, 1);
+              return;
+            }
+            this.favoriteList.push(name);
+          },
+          addPlayer() {
+            this.players.push({
+              name: this.newPlayer.name,
+              position: this.newPlayer.position,
+            })
+            this.newPlayer = {
+              name: '',
+              position: '',
+            }
           }
         }
       })
