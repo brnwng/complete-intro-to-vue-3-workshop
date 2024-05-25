@@ -6,5 +6,54 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
   </head>
-  <body></body>
+  <body>
+    <div id="app">
+      <p v-if="players.length === 0">There are no players</p>
+      <div v-else>
+        <h1>{{ teamName }}</h1>
+        <ul>
+          <li v-for="player in players">
+            {{ player.name }} - {{ player.position }}
+          </li>
+        </ul>
+        <p><span v-for="(player, index) in players">
+          {{ player.name }}{{index === players.length - 1 ? '' : ', ' }} </span></p>
+      </div>
+
+    </div>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script>
+      const { createApp } = Vue
+      const app = createApp({
+        data() {
+          return {
+            teamName: 'Lakers',
+            players: [
+              {
+                name: 'Lebron James',
+                position: 'SF'
+              },
+              {
+                name: 'Anthony Davis',
+                position: 'PF/C',
+              },
+              {
+                name: 'Austin Reaves',
+                position: 'SG',
+              },
+              {
+                name: 'Rui Hachimura',
+                position: 'SF'
+              },
+              {
+                name: 'Dangelo Russell',
+                position: 'G'
+              }
+            ]
+          }
+        }
+      })
+      app.mount('#app')
+    </script>
+  </body>
 </html>
