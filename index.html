@@ -36,6 +36,14 @@
         <input type="text" v-model="newPlayer.position" />
         <br>
       </div>
+      <div>
+        <h1>Stats</h1>
+        <ul>
+          <li>Forward: {{ forwardCount }} / {{ players.length }}</li>
+          <li>Guard: {{ guardCount }} / {{ players.length }}</li>
+          <li>Center: {{ centerCount }} / {{ players.length }}</li>
+        </ul>
+      </div>
 
     </div>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
@@ -53,26 +61,37 @@
             players: [
               {
                 name: 'Lebron James',
-                position: 'SF'
+                position: 'Forward'
               },
               {
                 name: 'Anthony Davis',
-                position: 'PF/C',
+                position: 'Center',
               },
               {
                 name: 'Austin Reaves',
-                position: 'SG',
+                position: 'Guard',
               },
               {
                 name: 'Rui Hachimura',
-                position: 'SF'
+                position: 'Forward'
               },
               {
                 name: 'Dangelo Russell',
-                position: 'G'
+                position: 'Guard'
               }
             ]
           }
+        },
+        computed: {
+          forwardCount() {
+            return this.players.filter(player => player.position === 'Forward').length
+          },
+          guardCount() {
+            return this.players.filter(player => player.position === 'Guard').length
+          },
+          centerCount() {
+            return this.players.filter(player => player.position === 'Center').length
+          },
         },
         methods: {
           favorite(name) {
